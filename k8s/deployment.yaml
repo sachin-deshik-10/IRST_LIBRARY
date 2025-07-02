@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: irst-library-api
+  labels:
+    app: irst-library
+    component: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: irst-library
+      component: api
+  template:
+    metadata:
+      labels:
+        app: irst-library
+        component: api
+    spec:
+      containers:
+      - name: irst-api
+        image: irst-library:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: IRST_ENV
+          value: "production"
+        - name: WORKERS
+          value: "4"
+        - name: LOG_LEVEL
+          value: "INFO"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: model-storage
+          mountPath: /app/models
+        - name: config-volume
+          mountPath: /app/config
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: irst-models-pvc
+      - name: config-volume
+        configMap:
+          name: irst-config
+      imagePullSecrets:
+      - name: registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: irst-library-service
+  labels:
+    app: irst-library
+spec:
+  selector:
+    app: irst-library
+    component: api
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: irst-models-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-ssd
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: irst-config
+data:
+  config.yaml: |
+    api:
+      host: "0.0.0.0"
+      port: 8000
+      workers: 4
+    
+    logging:
+      level: INFO
+      format: json
+    
+    models:
+      cache_size: 1000
+      max_batch_size: 32
+    
+    monitoring:
+      enabled: true
+      metrics_port: 9090
