@@ -7,6 +7,7 @@ This comprehensive guide covers all aspects of dataset management, preparation, 
 ### 🎯 Primary Datasets
 
 #### SIRST Dataset
+
 - **Description**: Single-frame infrared small target dataset
 - **Size**: 427 training images, 142 test images
 - **Resolution**: Variable (256×256 to 512×512)
@@ -24,6 +25,7 @@ dataset = SIRSTDataset(
 ```
 
 #### IRSTD-1k Dataset
+
 - **Description**: Large-scale infrared small target detection
 - **Size**: 1,000 high-quality images
 - **Resolution**: 512×512
@@ -41,6 +43,7 @@ dataset = IRSTD1kDataset(
 ```
 
 #### NUDT-SIRST Dataset
+
 - **Description**: Multi-scene infrared target detection
 - **Size**: 10,000+ images across multiple scenarios
 - **Resolution**: Variable
@@ -60,11 +63,13 @@ dataset = NUDTSIRSTDataset(
 ### 🌟 Specialized Datasets
 
 #### Multi-Modal Datasets
+
 - **IR-RGB-Paired**: Infrared and RGB paired dataset
 - **Thermal-Visible**: Thermal and visible spectrum pairs
 - **Multi-Spectral**: Multi-spectral infrared imaging
 
 #### Synthetic Datasets
+
 - **SyntheticIR**: Procedurally generated infrared scenes
 - **SimulatedTargets**: Physics-based target simulation
 - **AugmentedReal**: Real data with synthetic targets
@@ -101,12 +106,14 @@ data/
 ### Data Format Requirements
 
 #### Image Formats
+
 - **Supported**: PNG, JPEG, TIFF, NPY, HDF5
 - **Recommended**: PNG for lossless compression
 - **Bit Depth**: 8-bit, 16-bit supported
 - **Channels**: Grayscale (1), RGB (3), Multi-spectral (N)
 
 #### Annotation Formats
+
 - **Segmentation Masks**: Binary PNG masks
 - **Bounding Boxes**: COCO JSON format
 - **Points**: CSV with x,y coordinates

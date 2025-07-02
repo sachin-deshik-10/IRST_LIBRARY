@@ -115,6 +115,24 @@
 - Attention visualization and feature interpretation
 - Failure case analysis and robustness studies
 
+## 📓 Interactive Notebooks
+
+### 🎯 **Comprehensive Tutorial Collection**
+
+The IRST Library includes a complete set of Jupyter notebooks for hands-on learning:
+
+| Notebook | Focus | Difficulty | Duration |
+|----------|--------|------------|----------|
+| **[Complete Tutorial](notebooks/irst_tutorial.ipynb)** ⭐ | End-to-end workflow | ⭐⭐ | 2-3h |
+| **[Advanced Training](notebooks/training_advanced.ipynb)** | Multi-GPU & optimization | ⭐⭐⭐⭐ | 3-4h |
+| **[Model Zoo](notebooks/model_zoo_tutorial.ipynb)** | Model comparison | ⭐⭐⭐ | 1-2h |
+| **[Dataset Preparation](notebooks/dataset_preparation.ipynb)** | Data workflows | ⭐⭐⭐ | 2-3h |
+| **[Production Deployment](notebooks/deployment_tutorial.ipynb)** | MLOps & deployment | ⭐⭐⭐⭐ | 3-4h |
+| **[Benchmarking](notebooks/benchmarking_tutorial.ipynb)** | Performance analysis | ⭐⭐⭐ | 2-3h |
+| **[Complete Workflow](notebooks/complete_workflow.ipynb)** | Full pipeline | ⭐⭐⭐⭐⭐ | 4-6h |
+
+**🚀 [Start with the Complete Tutorial →](notebooks/irst_tutorial.ipynb)**
+
 ## 🏗️ Architecture Overview
 
 ### 🌟 Comprehensive System Overview
