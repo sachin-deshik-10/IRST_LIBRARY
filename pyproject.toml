@@ -53,26 +53,56 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "pytest-mock>=3.7.0",
+    "pytest-xdist>=2.5.0",
+    "pytest-benchmark>=3.4.0",
     "black>=22.0.0",
     "isort>=5.10.0",
     "flake8>=5.0.0",
     "mypy>=0.991",
     "pre-commit>=2.20.0",
-    "sphinx>=5.0.0",
-    "sphinx-rtd-theme>=1.0.0",
+    "bandit>=1.7.0",
+    "safety>=2.0.0",
     "jupyter>=1.0.0",
     "ipykernel>=6.0.0",
+    "line-profiler>=3.5.0",
+    "memory-profiler>=0.60.0",
 ]
 docs = [
     "sphinx>=5.0.0",
     "sphinx-rtd-theme>=1.0.0",
     "myst-parser>=0.18.0",
     "sphinx-autoapi>=2.0.0",
+    "nbsphinx>=0.8.0",
+    "sphinx-autodoc-typehints>=1.17.0",
 ]
 benchmark = [
     "pandas>=1.5.0",
     "plotly>=5.11.0",
     "streamlit>=1.15.0",
+    "gradio>=3.0.0",
+]
+deployment = [
+    "onnx>=1.12.0",
+    "onnxruntime>=1.12.0",
+    "tensorrt>=8.4.0",
+    "docker>=5.0.0",
+    "flask>=2.1.0",
+    "fastapi>=0.78.0",
+    "uvicorn>=0.18.0",
+]
+all = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.7.0",
+    "black>=22.0.0",
+    "isort>=5.10.0",
+    "flake8>=5.0.0",
+    "mypy>=0.991",
+    "sphinx>=5.0.0",
+    "pandas>=1.5.0",
+    "onnx>=1.12.0",
+    "docker>=5.0.0",
 ]
 
 [project.urls]

@@ -1,0 +1,76 @@
+name: Security Audit
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit safety semgrep
+        pip install -r requirements.txt
+    
+    - name: Run Bandit Security Scan
+      run: bandit -r irst_library/ -f json -o bandit-report.json
+      continue-on-error: true
+    
+    - name: Run Safety Check
+      run: safety check --json --output safety-report.json
+      continue-on-error: true
+    
+    - name: Run Semgrep
+      run: |
+        python -m semgrep --config=auto --json --output=semgrep-report.json irst_library/
+      continue-on-error: true
+    
+    - name: Upload Security Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+          semgrep-report.json
+    
+    - name: Comment PR with Security Summary
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          try {
+            const bandit = JSON.parse(fs.readFileSync('bandit-report.json', 'utf8'));
+            const safety = JSON.parse(fs.readFileSync('safety-report.json', 'utf8'));
+            
+            const comment = `## 🔒 Security Audit Results
+            
+            **Bandit Issues:** ${bandit.results.length}
+            **Safety Vulnerabilities:** ${safety.vulnerabilities ? safety.vulnerabilities.length : 0}
+            
+            Please review the security reports in the workflow artifacts.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          } catch (error) {
+            console.log('Could not parse security reports:', error);
+          }

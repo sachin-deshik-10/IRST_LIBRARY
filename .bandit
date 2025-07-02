@@ -1,0 +1,5 @@
+[bandit]
+exclude_dirs = ["tests", "build", "dist"]
+skips = ["B101", "B601"]
+# B101: Skip assert_used test
+# B601: Skip shell_injection_paramiko test for false positives

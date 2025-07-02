@@ -1,0 +1,52 @@
+name: Performance Benchmarks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 4 * * 0'  # Weekly on Sunday at 4 AM
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10']
+        model: ['serank', 'acm', 'unet']
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[dev,benchmark]
+        pip install pytest-benchmark
+    
+    - name: Run Model Benchmarks
+      run: |
+        python scripts/benchmark.py --model ${{ matrix.model }} --output benchmarks/
+    
+    - name: Run Memory Profiling
+      run: |
+        python -m pytest tests/test_performance.py::test_memory_usage_${{ matrix.model }} --benchmark-json=benchmark_${{ matrix.model }}.json
+    
+    - name: Upload Benchmark Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: benchmarks-${{ matrix.python-version }}-${{ matrix.model }}
+        path: |
+          benchmarks/
+          benchmark_*.json
+    
+    - name: Performance Regression Check
+      run: |
+        python scripts/check_performance_regression.py --current benchmark_${{ matrix.model }}.json --baseline benchmarks/baseline_${{ matrix.model }}.json
+      continue-on-error: true

@@ -1,0 +1,177 @@
+# Git
+.git
+.gitignore
+.gitmodules
+
+# Documentation
+docs/_build/
+*.md
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+GOVERNANCE.md
+ROADMAP.md
+CONTRIBUTORS.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environment variables
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data files (usually large)
+data/
+datasets/
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# Model files (exclude from container)
+*.pth
+*.pt
+*.onnx
+*.trt
+checkpoints/
+models/pretrained/
+weights/
+
+# Results and outputs
+results/
+outputs/
+experiments/
+runs/
+wandb/
+
+# Development tools
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Profiling
+*.prof
+
+# Benchmarks
+benchmark_results/
+*.html
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Package files
+*.tar.gz
+*.zip
+*.rar
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Make
+Makefile
+
+# Pre-commit
+.pre-commit-config.yaml
+
+# Configuration (potentially sensitive)
+config.yaml
+config.yml
+secrets.yaml
+secrets.yml
+
+# Large datasets
+*.tar
+*.gz
+*.zip
+*.rar
+*.7z
