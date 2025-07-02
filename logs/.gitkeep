@@ -1,0 +1,7 @@
+# Logs Directory
+
+Application logs are stored here. This directory is created automatically when the application runs.
+
+Log files are rotated automatically to prevent disk space issues.
+
+See `logging.yaml` for configuration details.

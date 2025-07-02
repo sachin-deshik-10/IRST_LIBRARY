@@ -1,0 +1,22 @@
+# Benchmarks Directory
+
+This directory contains benchmark results and baseline files for model performance tracking.
+
+## Structure
+
+- `baseline/` - Baseline benchmark results for comparison
+- `results/` - Current benchmark results
+- `reports/` - Generated benchmark reports
+- `configs/` - Benchmark configuration files
+
+## Usage
+
+```bash
+# Run benchmarks
+python scripts/benchmark.py --output benchmarks/results/
+
+# Compare with baseline
+python scripts/check_performance_regression.py \
+  --current benchmarks/results/current.json \
+  --baseline benchmarks/baseline/baseline.json
+```

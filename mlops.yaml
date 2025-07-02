@@ -1,0 +1,260 @@
+# MLOps Configuration for IRST Library
+
+model:
+  name: "irst-model"
+  version: "1.0.0"
+  description: "Infrared Small Target Detection Model"
+  tags:
+    - computer-vision
+    - infrared
+    - detection
+    - pytorch
+
+# Data Management
+data:
+  input:
+    type: "infrared_images"
+    format: ["png", "jpg", "tiff"]
+    resolution: [256, 256]
+    channels: 1
+  
+  output:
+    type: "segmentation_mask"
+    format: "png"
+    classes: 2  # background, target
+  
+  storage:
+    training_data: "s3://irst-data/training/"
+    validation_data: "s3://irst-data/validation/"
+    test_data: "s3://irst-data/test/"
+    model_artifacts: "s3://irst-models/artifacts/"
+
+# Training Configuration
+training:
+  framework: "pytorch"
+  compute:
+    instance_type: "ml.g4dn.xlarge"
+    instance_count: 1
+    max_runtime: 86400  # 24 hours
+  
+  hyperparameters:
+    batch_size: 16
+    learning_rate: 0.001
+    epochs: 100
+    optimizer: "adamw"
+    weight_decay: 0.01
+  
+  early_stopping:
+    monitor: "val_iou"
+    patience: 10
+    min_delta: 0.001
+
+# Model Registry
+registry:
+  backend: "mlflow"  # or "wandb", "neptune"
+  tracking_uri: "https://mlflow.company.com"
+  experiment_name: "irst-detection"
+  
+  model_approval:
+    required_metrics:
+      val_iou: ">= 0.80"
+      val_f1: ">= 0.85"
+      inference_time: "<= 20"  # milliseconds
+  
+  model_stages:
+    - "development"
+    - "staging" 
+    - "production"
+    - "archived"
+
+# Deployment Configuration
+deployment:
+  endpoints:
+    - name: "irst-detector-staging"
+      environment: "staging"
+      instance_type: "ml.m5.large"
+      min_capacity: 1
+      max_capacity: 10
+      target_cpu_utilization: 70
+    
+    - name: "irst-detector-prod"
+      environment: "production"
+      instance_type: "ml.g4dn.xlarge" 
+      min_capacity: 2
+      max_capacity: 20
+      target_cpu_utilization: 60
+  
+  model_format: "onnx"  # for optimized inference
+  
+  monitoring:
+    data_drift:
+      enabled: true
+      threshold: 0.1
+      schedule: "0 2 * * *"  # daily at 2 AM
+    
+    model_drift:
+      enabled: true
+      baseline_window: 7  # days
+      comparison_window: 1  # day
+      threshold: 0.05
+    
+    performance:
+      latency_sla: 100  # milliseconds
+      throughput_sla: 100  # requests per second
+      error_rate_sla: 0.01  # 1%
+
+# Data Quality and Validation
+data_validation:
+  expectations:
+    - name: "image_format"
+      expectation: "expect_column_values_to_be_in_set"
+      column: "format"
+      value_set: ["png", "jpg", "jpeg", "tiff"]
+    
+    - name: "image_resolution"
+      expectation: "expect_column_values_to_be_between"
+      column: "width"
+      min_value: 128
+      max_value: 2048
+    
+    - name: "mask_completeness"
+      expectation: "expect_column_to_exist"
+      column: "mask_path"
+  
+  data_drift_detection:
+    reference_dataset: "s3://irst-data/reference/"
+    comparison_threshold: 0.1
+    features:
+      - "mean_intensity"
+      - "std_intensity"
+      - "image_entropy"
+
+# Model Monitoring
+monitoring:
+  logging:
+    level: "INFO"
+    format: "json"
+    destination: "cloudwatch"
+  
+  metrics:
+    business:
+      - name: "detection_accuracy"
+        description: "Model detection accuracy in production"
+        unit: "percentage"
+      
+      - name: "false_positive_rate"
+        description: "False positive detection rate"
+        unit: "percentage"
+    
+    system:
+      - name: "inference_latency"
+        description: "Model inference latency"
+        unit: "milliseconds"
+      
+      - name: "memory_usage"
+        description: "Model memory consumption"
+        unit: "MB"
+  
+  alerts:
+    - name: "high_latency"
+      condition: "inference_latency > 100"
+      severity: "warning"
+      notification: "slack://alerts-channel"
+    
+    - name: "low_accuracy"
+      condition: "detection_accuracy < 0.80"
+      severity: "critical"
+      notification: "pagerduty://on-call"
+
+# CI/CD Pipeline
+cicd:
+  triggers:
+    - "push_to_main"
+    - "pull_request"
+    - "scheduled_retrain"
+  
+  stages:
+    - name: "data_validation"
+      script: "python scripts/validate_data.py"
+      
+    - name: "model_training"
+      script: "python scripts/train_model.py"
+      
+    - name: "model_evaluation"
+      script: "python scripts/evaluate_model.py"
+      
+    - name: "model_testing"
+      script: "python scripts/test_model.py"
+      
+    - name: "deploy_staging"
+      script: "python scripts/deploy_staging.py"
+      condition: "branch == 'main'"
+      
+    - name: "integration_tests"
+      script: "python scripts/integration_tests.py"
+      
+    - name: "deploy_production"
+      script: "python scripts/deploy_production.py"
+      condition: "manual_approval"
+
+# Security and Compliance
+security:
+  model_encryption:
+    enabled: true
+    key_management: "aws-kms"
+  
+  data_privacy:
+    pii_detection: false  # infrared images typically don't contain PII
+    data_retention_days: 365
+  
+  access_control:
+    authentication: "iam"
+    authorization: "rbac"
+    
+    roles:
+      - name: "data_scientist"
+        permissions: ["read_data", "train_model", "view_experiments"]
+      
+      - name: "ml_engineer"
+        permissions: ["read_data", "deploy_model", "manage_endpoints"]
+      
+      - name: "admin"
+        permissions: ["all"]
+
+# Cost Management
+cost_optimization:
+  training:
+    spot_instances: true
+    auto_scaling: true
+    schedule:
+      start: "08:00"
+      stop: "18:00"
+      timezone: "UTC"
+  
+  inference:
+    auto_scaling: true
+    cold_start_optimization: true
+    cache_predictions: true
+    cache_ttl: 300  # seconds
+
+# Integration Settings
+integrations:
+  mlflow:
+    tracking_uri: "https://mlflow.company.com"
+    backend_store_uri: "postgresql://user:pass@mlflow-db:5432/mlflow"
+    artifact_store_uri: "s3://mlflow-artifacts"
+  
+  wandb:
+    project: "irst-detection"
+    entity: "company-ml-team"
+  
+  tensorboard:
+    log_dir: "s3://tensorboard-logs/irst/"
+  
+  slack:
+    webhook_url: "https://hooks.slack.com/services/..."
+    channel: "#ml-alerts"
+  
+  jira:
+    server: "https://company.atlassian.net"
+    project: "ML"

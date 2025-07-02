@@ -36,7 +36,7 @@ IRST Library is a professional, production-ready Python library for Infrared Sma
 pip install irst-library
 
 # Development installation
-git clone https://github.com/your-org/irst-library
+git clone https://github.com/sachin-deshik-10/irst-library
 cd irst-library
 pip install -e .[dev]
 
@@ -139,6 +139,7 @@ See our [Dataset Preparation Guide](dataset_preparation.md) for detailed instruc
 ### Can I use the library for real-time applications?
 
 Yes! The library supports:
+
 - ONNX export for optimized inference
 - TensorRT integration for NVIDIA GPUs
 - Model quantization for mobile deployment
@@ -223,17 +224,20 @@ trainer = IRSTTrainer(
 ### Common Error Messages
 
 #### "Model not found: {model_name}"
+
 - Check available models: `from irst_library.models import list_models; print(list_models())`
 - Verify model name spelling
 - Update library: `pip install --upgrade irst-library`
 
 #### "CUDA out of memory"
+
 - Reduce batch size
 - Use gradient accumulation
 - Enable gradient checkpointing
 - Use CPU: `device='cpu'`
 
 #### "Dataset not found"
+
 - Check dataset path
 - Verify dataset format
 - Run dataset validation: `python scripts/validate_dataset.py`
@@ -241,11 +245,13 @@ trainer = IRSTTrainer(
 ### Performance Issues
 
 #### Training is very slow
+
 - Check GPU utilization: `nvidia-smi`
 - Optimize data loading (see performance section)
 - Profile your code: `python -m cProfile train.py`
 
 #### Poor model performance
+
 - Check data quality and labels
 - Verify preprocessing steps
 - Try different models or hyperparameters

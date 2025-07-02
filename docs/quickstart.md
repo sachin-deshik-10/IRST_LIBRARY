@@ -13,7 +13,7 @@ pip install irst-library
 ### From Source
 
 ```bash
-git clone https://github.com/IRST-Research/irst-library.git
+git clone https://github.com/sachin-deshik-10/irst-library.git
 cd irst-library
 pip install -e ".[dev]"
 ```
@@ -283,6 +283,6 @@ optimized_model = optimizer.optimize(
 ## Getting Help
 
 - 📖 [Full Documentation](https://irst-library.readthedocs.io)
-- 💬 [GitHub Discussions](https://github.com/IRST-Research/irst-library/discussions)
-- 🐛 [Issue Tracker](https://github.com/IRST-Research/irst-library/issues)
-- 📧 Email: <contact@irst-lib.org>
+- 💬 [GitHub Discussions](https://github.com/sachin-deshik-10/irst-library/discussions)
+- 🐛 [Issue Tracker](https://github.com/sachin-deshik-10/irst-library/issues)
+- 📧 Email: <nayakulasachindeshik@gmail.com>
