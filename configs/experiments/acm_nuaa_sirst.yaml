@@ -1,0 +1,157 @@
+# ACMNet experiment configuration for NUAA-SIRST dataset
+defaults:
+  - _self_
+
+# Experiment info
+name: "acm_nuaa_sirst"
+description: "ACMNet training on NUAA-SIRST dataset"
+tags: ["acm", "nuaa-sirst", "contextual-modulation", "dense-blocks"]
+
+# Model configuration
+model:
+  name: "acm"
+  in_channels: 1
+  num_classes: 1
+  base_channels: 64
+  num_dense_layers: 4
+
+# Dataset configuration
+dataset:
+  name: "nuaa_sirst"
+  root_dir: "data/nuaa_sirst"
+  image_size: [256, 256]
+  train_split: "train"
+  val_split: "val"
+  test_split: "test"
+  cache_in_memory: true  # Smaller dataset, can cache
+  num_workers: 4
+  pin_memory: true
+  
+  # Data augmentation
+  augmentation:
+    enabled: true
+    horizontal_flip: 0.5
+    vertical_flip: 0.5
+    rotation: 20
+    scale_range: [0.8, 1.2]
+    brightness: 0.3
+    contrast: 0.3
+    noise_std: 0.05
+    blur_prob: 0.3
+
+# Training configuration
+training:
+  batch_size: 8  # Smaller batch size for ACM's dense connections
+  num_epochs: 150
+  optimizer:
+    name: "adam"
+    lr: 0.0005
+    weight_decay: 0.0001
+    betas: [0.9, 0.999]
+  
+  scheduler:
+    name: "step"
+    step_size: 50
+    gamma: 0.5
+  
+  loss:
+    name: "combined"
+    losses:
+      dice: 1.0
+      focal: 2.0
+      tversky: 0.5
+    focal_alpha: 0.25
+    focal_gamma: 2.0
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+  
+  # Mixed precision training
+  mixed_precision: true
+  
+  # Gradient clipping
+  gradient_clip: 0.5
+
+# Validation configuration
+validation:
+  frequency: 1
+  metrics: ["precision", "recall", "f1", "iou", "auc_roc", "auc_pr"]
+  
+# Callbacks
+callbacks:
+  early_stopping:
+    enabled: true
+    monitor: "val_iou"
+    patience: 20
+    mode: "max"
+    restore_best_weights: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: "val_iou"
+    mode: "max"
+    save_best_only: true
+    filepath: "checkpoints/{name}_epoch{epoch:02d}_iou{val_iou:.4f}.pth"
+  
+  reduce_lr:
+    enabled: true
+    monitor: "val_loss"
+    factor: 0.2
+    patience: 10
+    min_lr: 0.000001
+  
+  csv_logger:
+    enabled: true
+    filename: "logs/{name}_training.csv"
+  
+  tensorboard:
+    enabled: true
+    log_dir: "logs/tensorboard/{name}"
+
+# Evaluation configuration
+evaluation:
+  thresholds: [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+  min_object_area: 5  # Smaller for NUAA-SIRST
+  distance_threshold: 2.0
+  save_predictions: true
+  prediction_dir: "predictions/{name}"
+  
+  # ROC and PR curve generation
+  generate_curves: true
+  curve_output_dir: "curves/{name}"
+
+# System configuration
+system:
+  device: "auto"
+  seed: 42
+  deterministic: true
+  benchmark: false
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+# Checkpointing
+checkpoint:
+  save_dir: "checkpoints"
+  resume: null
+  
+# Paths
+paths:
+  data_dir: "data"
+  output_dir: "outputs"
+  log_dir: "logs"
+  
+# Hyperparameter search (optional)
+search:
+  enabled: false
+  method: "random"  # random, grid, bayesian
+  n_trials: 50
+  
+  # Parameters to search
+  parameters:
+    model.base_channels: [32, 64, 96, 128]
+    model.num_dense_layers: [3, 4, 5, 6]
+    training.batch_size: [4, 8, 12, 16]
+    training.optimizer.lr: [0.0001, 0.0005, 0.001, 0.005]
+    training.loss.focal_alpha: [0.25, 0.5, 0.75, 1.0]

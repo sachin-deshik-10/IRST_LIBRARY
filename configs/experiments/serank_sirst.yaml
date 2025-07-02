@@ -1,0 +1,135 @@
+# SERANKNet experiment configuration for SIRST dataset
+defaults:
+  - _self_
+
+# Experiment info
+name: "serank_sirst"
+description: "SERANKNet training on SIRST dataset"
+tags: ["serank", "sirst", "attention", "search-ranking"]
+
+# Model configuration
+model:
+  name: "serank"
+  in_channels: 1
+  num_classes: 1
+  base_channels: 64
+  use_attention: true
+
+# Dataset configuration
+dataset:
+  name: "sirst"
+  root_dir: "data/sirst"
+  image_size: [256, 256]
+  train_split: "train"
+  val_split: "val"
+  test_split: "test"
+  cache_in_memory: false
+  num_workers: 4
+  pin_memory: true
+  
+  # Data augmentation
+  augmentation:
+    enabled: true
+    horizontal_flip: 0.5
+    vertical_flip: 0.5
+    rotation: 15
+    scale_range: [0.8, 1.2]
+    brightness: 0.2
+    contrast: 0.2
+    noise_std: 0.1
+
+# Training configuration
+training:
+  batch_size: 16
+  num_epochs: 100
+  optimizer:
+    name: "adamw"
+    lr: 0.001
+    weight_decay: 0.01
+    betas: [0.9, 0.999]
+  
+  scheduler:
+    name: "cosine"
+    T_max: 100
+    eta_min: 0.00001
+  
+  loss:
+    name: "irst"
+    dice_weight: 1.0
+    focal_weight: 1.0
+    iou_weight: 0.5
+    focal_alpha: 1.0
+    focal_gamma: 2.0
+  
+  # Mixed precision training
+  mixed_precision: true
+  
+  # Gradient clipping
+  gradient_clip: 1.0
+
+# Validation configuration
+validation:
+  frequency: 1  # Validate every epoch
+  metrics: ["precision", "recall", "f1", "iou", "auc_roc"]
+  
+# Callbacks
+callbacks:
+  early_stopping:
+    enabled: true
+    monitor: "val_f1"
+    patience: 15
+    mode: "max"
+    restore_best_weights: true
+  
+  model_checkpoint:
+    enabled: true
+    monitor: "val_f1"
+    mode: "max"
+    save_best_only: true
+    filepath: "checkpoints/{name}_epoch{epoch:02d}_f1{val_f1:.4f}.pth"
+  
+  reduce_lr:
+    enabled: true
+    monitor: "val_loss"
+    factor: 0.5
+    patience: 8
+    min_lr: 0.00001
+  
+  csv_logger:
+    enabled: true
+    filename: "logs/{name}_training.csv"
+  
+  tensorboard:
+    enabled: true
+    log_dir: "logs/tensorboard/{name}"
+
+# Evaluation configuration
+evaluation:
+  thresholds: [0.3, 0.4, 0.5, 0.6, 0.7]
+  min_object_area: 10
+  distance_threshold: 3.0
+  save_predictions: true
+  prediction_dir: "predictions/{name}"
+
+# System configuration
+system:
+  device: "auto"  # auto, cpu, cuda
+  seed: 42
+  deterministic: true
+  benchmark: false  # Set to true for consistent input sizes
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+# Checkpointing
+checkpoint:
+  save_dir: "checkpoints"
+  resume: null  # Path to checkpoint to resume from
+  
+# Paths
+paths:
+  data_dir: "data"
+  output_dir: "outputs"
+  log_dir: "logs"

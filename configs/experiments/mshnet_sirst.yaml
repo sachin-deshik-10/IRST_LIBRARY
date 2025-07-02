@@ -1,0 +1,91 @@
+# Example configuration for MSHNet training on SIRST dataset
+
+# Model configuration
+model:
+  type: MSHNet
+  backbone: resnet18
+  num_classes: 1
+  pretrained: true
+  
+# Dataset configuration  
+dataset:
+  type: SIRSTDataset
+  root: ./data/SIRST
+  image_size: [512, 512]
+  transforms:
+    train:
+      - type: Resize
+        size: [512, 512]
+      - type: RandomHorizontalFlip
+        p: 0.5
+      - type: RandomVerticalFlip
+        p: 0.5
+      - type: RandomRotation
+        degrees: 10
+      - type: ToTensor
+      - type: Normalize
+        mean: [0.485]
+        std: [0.229]
+    val:
+      - type: Resize
+        size: [512, 512]
+      - type: ToTensor
+      - type: Normalize
+        mean: [0.485]
+        std: [0.229]
+
+# Training configuration
+training:
+  batch_size: 8
+  num_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  
+  # Optimizer
+  optimizer:
+    type: Adam
+    lr: 0.001
+    weight_decay: 1e-4
+    
+  # Scheduler
+  scheduler:
+    type: StepLR
+    step_size: 30
+    gamma: 0.1
+    
+  # Loss function
+  loss:
+    type: DiceBCELoss
+    dice_weight: 0.5
+    bce_weight: 0.5
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - IoU
+    - Dice
+    - Precision
+    - Recall
+    - F1Score
+  threshold: 0.5
+
+# Logging and checkpointing
+logging:
+  log_dir: ./logs
+  log_interval: 10
+  save_top_k: 3
+  monitor: val_iou
+  mode: max
+  
+checkpoint:
+  save_dir: ./checkpoints
+  filename: mshnet_sirst_epoch_{epoch:02d}_iou_{val_iou:.4f}
+  
+# Hardware configuration
+hardware:
+  accelerator: gpu
+  devices: 1
+  precision: 16
+  
+# Seed for reproducibility
+seed: 42
