@@ -1,0 +1,110 @@
+# Advanced Configuration for IRST Library
+
+## 🎛️ Multi-Environment Configuration
+hydra:
+  version_base: '1.1'
+  run:
+    dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  job:
+    name: irst_experiment
+
+defaults:
+  - model: serank
+  - dataset: sirst
+  - training: default
+  - optimization: adamw
+  - scheduler: cosine
+  - augmentation: standard
+  - logging: mlflow
+  - deployment: docker
+  - _self_
+
+# Experiment Configuration
+experiment:
+  name: "irst_${model.name}_${dataset.name}"
+  tags: ["research", "istd", "infrared"]
+  notes: "Advanced IRST experiment with ${model.name}"
+  
+# Model Configuration
+model:
+  name: serank
+  architecture:
+    backbone: resnet50
+    attention: true
+    multi_scale: true
+  pretrained: true
+  freeze_backbone: false
+  
+# Dataset Configuration  
+dataset:
+  name: sirst
+  root: "./data"
+  splits:
+    train: 0.7
+    val: 0.15
+    test: 0.15
+  augmentation:
+    enabled: true
+    strength: 0.5
+  
+# Training Configuration
+training:
+  epochs: 100
+  batch_size: 16
+  gradient_clipping: 1.0
+  mixed_precision: true
+  accumulation_steps: 1
+  
+# Optimization
+optimization:
+  optimizer: adamw
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  betas: [0.9, 0.999]
+  
+# Learning Rate Scheduling
+scheduler:
+  name: cosine
+  warmup_epochs: 10
+  min_lr: 1e-6
+  
+# Loss Configuration
+loss:
+  type: combined
+  weights:
+    focal: 0.4
+    dice: 0.3
+    iou: 0.2
+    tversky: 0.1
+    
+# Metrics Tracking
+metrics:
+  primary: val_iou
+  early_stopping:
+    patience: 15
+    min_delta: 0.001
+    
+# Hardware Configuration
+hardware:
+  gpus: auto
+  precision: 16
+  distributed: auto
+  workers: 4
+  
+# Logging Configuration
+logging:
+  backend: mlflow
+  level: INFO
+  log_model: true
+  log_artifacts: true
+  
+# Deployment Configuration
+deployment:
+  target: docker
+  optimization:
+    quantization: true
+    pruning: false
+    distillation: false
+  monitoring:
+    enabled: true
+    alerts: true
