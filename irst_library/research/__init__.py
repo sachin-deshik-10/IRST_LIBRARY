@@ -9,14 +9,12 @@ from .continual_learning import *
 from .physics_informed import *
 from .adversarial_robustness import *
 from .synthetic_data import *
-
-# Placeholder stubs (to be implemented)
-from .nas import NeuralArchitectureSearch
-from .ssl import SelfSupervisedLearning
-from .meta_learning import MetaLearner
-from .explainability import ExplainabilityAnalyzer
-from .domain_adaptation import DomainAdapter
-from .active_learning import ActiveLearner
+from .nas import *
+from .ssl import *
+from .meta_learning import *
+from .explainability import *
+from .domain_adaptation import *
+from .active_learning import *
 
 __all__ = [
     # Quantum Neural Networks
@@ -62,11 +60,57 @@ __all__ = [
     "create_synthetic_dataset",
     "create_synthetic_pipeline",
     
-    # Placeholder stubs
+    # Neural Architecture Search
+    "NASController",
+    "SuperNet",
+    "EvolutionaryNAS",
+    "DifferentiableNAS",
     "NeuralArchitectureSearch",
+    "create_nas_experiment",
+    "run_nas_search",
+    
+    # Self-Supervised Learning
+    "SimCLR",
+    "BYOL",
+    "SwAV",
+    "MoCo",
     "SelfSupervisedLearning",
-    "MetaLearner", 
+    "create_ssl_experiment",
+    
+    # Meta-Learning
+    "MAML",
+    "ProtoNet",
+    "RelationNet",
+    "MetaOptimizer",
+    "MetaLearner",
+    "create_meta_learning_setup",
+    
+    # Explainability
+    "GradCAM",
+    "LIME",
+    "SHAP",
+    "IntegratedGradients",
     "ExplainabilityAnalyzer",
+    "create_explainability_suite",
+    
+    # Domain Adaptation
+    "DANN",
+    "CORAL",
+    "AdaBN",
     "DomainAdapter",
-    "ActiveLearner"
+    "create_domain_adaptation_setup",
+    
+    # Active Learning
+    "UncertaintySampler",
+    "CommitteeSampler",
+    "DiversitySampler",
+    "HybridSampler",
+    "ExpectedModelChangeSampler",
+    "ParetoActiveLearner",
+    "ActiveLearner",
+    "StreamingActiveLearner",
+    "SamplingStrategy",
+    "ActiveLearningConfig",
+    "create_active_learning_experiment",
+    "benchmark_active_learning_strategies"
 ]
