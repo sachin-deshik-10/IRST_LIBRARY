@@ -1,0 +1,90 @@
+{
+  "timestamp": "2025-07-02T12:00:00Z",
+  "score": 100.0,
+  "structure_results": {
+    "core_files": {
+      "setup.py": true,
+      "requirements.txt": true,
+      "requirements-dev.txt": true,
+      "MANIFEST.in": true,
+      "pyproject.toml": true,
+      "README.md": true,
+      "LICENSE": true,
+      "CHANGELOG.md": true,
+      "SECURITY.md": true,
+      "CODE_OF_CONDUCT.md": true,
+      "CONTRIBUTORS.md": true,
+      "GOVERNANCE.md": true,
+      "ROADMAP.md": true,
+      ".gitignore": true,
+      ".env.template": true
+    },
+    "documentation": {
+      "docs/api_reference.md": true,
+      "docs/ARCHITECTURE.md": true,
+      "docs/BENCHMARKS.md": true,
+      "docs/FAQ.md": true,
+      "docs/quickstart.md": true,
+      "docs/models.md": true,
+      "docs/datasets.md": true
+    },
+    "ci_cd": {
+      ".github/workflows/ci.yml": true,
+      ".github/workflows/benchmarks.yml": true,
+      ".github/workflows/release.yml": true,
+      ".github/workflows/security.yml": true,
+      ".github/ISSUE_TEMPLATE/bug_report.md": true,
+      ".github/ISSUE_TEMPLATE/feature_request.md": true
+    },
+    "quality_tools": {
+      ".pre-commit-config.yaml": true,
+      "Makefile": true,
+      "mypy.ini": true,
+      ".coveragerc": true,
+      "pytest.ini": true,
+      ".bandit": true,
+      ".editorconfig": true
+    },
+    "deployment": {
+      "Dockerfile": true,
+      "docker-compose.yml": true,
+      ".dockerignore": true,
+      "k8s/deployment.yaml": true,
+      "k8s/ingress.yaml": true,
+      "k8s/monitoring.yaml": true,
+      "deploy.sh": true,
+      "run_tests.sh": true
+    },
+    "notebooks": {
+      "notebooks/irst_tutorial.ipynb": true
+    },
+    "missing_files": [],
+    "score": 100.0
+  },
+  "python_results": {
+    "modules": {
+      "irst_library/__init__.py": true,
+      "irst_library/core/__init__.py": true,
+      "irst_library/models/__init__.py": true,
+      "irst_library/datasets/__init__.py": true,
+      "irst_library/training/__init__.py": true,
+      "irst_library/utils/__init__.py": true,
+      "irst_library/cli/__init__.py": true
+    },
+    "test_structure": {
+      "tests/conftest.py": true,
+      "tests/unit/test_core.py": true,
+      "tests/unit/test_models.py": true
+    },
+    "scripts": {
+      "scripts/benchmark.py": true,
+      "scripts/check_performance_regression.py": true,
+      "scripts/generate_docs.py": true,
+      "scripts/setup_dev.py": true,
+      "scripts/validate_model.py": true,
+      "scripts/quality_check.py": true
+    }
+  },
+  "standards_passed": 8,
+  "total_standards": 8
+}
