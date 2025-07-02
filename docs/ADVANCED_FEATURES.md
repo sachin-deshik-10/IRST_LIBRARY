@@ -491,12 +491,16 @@ def create_integrated_active_learning():
 
 ### Future Enhancements
 
-#### Q3 2025
+#### Q3 2025 - Active Learning
+
 - **Deep Active Learning**: Neural architecture-specific strategies
 - **Multi-Task Selection**: Shared representation learning
 - **Federated Active Learning**: Distributed annotation systems
 
-#### Q4 2025
+#### Q4 2025 - Active Learning
+
 - **Reinforcement Learning**: Policy-based sample selection
 - **Causal Active Learning**: Interventional query strategies
 - **Quantum Active Learning**: Quantum-enhanced selection
+
+---
