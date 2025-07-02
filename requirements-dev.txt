@@ -1,0 +1,41 @@
+# Include base requirements
+-r requirements.txt
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=3.0.0
+pytest-mock>=3.7.0
+pytest-xdist>=2.5.0
+pytest-benchmark>=3.4.0
+black>=22.0.0
+isort>=5.10.0
+flake8>=4.0.0
+mypy>=0.950
+pre-commit>=2.17.0
+bandit>=1.7.0
+safety>=2.0.0
+
+# Documentation
+sphinx>=4.5.0
+sphinx-rtd-theme>=1.0.0
+sphinx-autodoc-typehints>=1.17.0
+myst-parser>=0.17.0
+nbsphinx>=0.8.0
+
+# Jupyter notebooks
+jupyter>=1.0.0
+notebook>=6.4.0
+ipywidgets>=7.7.0
+jupyterlab>=3.4.0
+
+# Profiling and debugging
+line-profiler>=3.5.0
+memory-profiler>=0.60.0
+py-spy>=0.3.0
+scalene>=1.5.0
+
+# Code quality
+coverage>=6.0.0
+codecov>=2.1.0
+interrogate>=1.5.0
+vulture>=2.5.0

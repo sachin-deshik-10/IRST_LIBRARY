@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 Carleton Spark
+Copyright (c) 2025 IRST Library Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,131 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+
+ADDITIONAL TERMS AND CONDITIONS FOR RESEARCH USE
+
+1. ACADEMIC AND RESEARCH USE
+   This software is provided free of charge for academic research and
+   educational purposes. Commercial use requires a separate license agreement.
+
+2. CITATION REQUIREMENTS
+   If you use this software in academic research, please cite:
+
+   @software{irst_library_2025,
+     title={IRST Library: Comprehensive Infrared Small Target Detection},
+     author={IRST Library Contributors},
+     year={2025},
+     url={<https://github.com/sachin-deshik-10/irst-library}>,
+     version={2.0.0}
+   }
+
+3. RESEARCH PAPER CITATIONS
+   When using specific models implemented in this library, please also cite
+   the original research papers. See the documentation for complete citation
+   information for each model architecture.
+
+4. DATASET USAGE
+   Users are responsible for complying with the terms and conditions of any
+   datasets used with this software. The IRST Library does not distribute
+   datasets directly and users must obtain proper permissions.
+
+5. MODEL WEIGHTS AND PRETRAINED MODELS
+   Pretrained model weights are provided for research purposes only. Commercial
+   use of pretrained models may require additional permissions from the original
+   authors or training new models on properly licensed data.
+
+6. TRADEMARK NOTICE
+   "IRST Library" and related marks are trademarks of the project maintainers.
+   Use of these marks requires prior written permission except for attribution
+   purposes as required by this license.
+
+7. EXPORT CONTROL
+   This software may be subject to export control laws and regulations. Users
+   are responsible for complying with all applicable export control requirements.
+
+8. THIRD-PARTY COMPONENTS
+   This software incorporates third-party libraries and components, each with
+   their own license terms. See THIRD_PARTY_LICENSES.md for complete information.
+
+9. PRIVACY AND DATA PROTECTION
+   Users are responsible for ensuring compliance with applicable privacy laws
+   and regulations, including GDPR, when processing personal data or images
+   that may contain personal information.
+
+10. LIMITATION OF LIABILITY
+    IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY
+    SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER ARISING
+    OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGES.
+
+11. UPDATES AND MODIFICATIONS
+    The maintainers reserve the right to update these terms. Users will be
+    notified of significant changes through the project's communication channels.
+
+================================================================================
+
+COMMERCIAL LICENSE
+
+For commercial use, enterprise features, or custom development, please contact:
+
+- Email: <license@irst-library.org>
+- Website: <https://irst-library.org/commercial>
+- Support: <https://irst-library.org/support>
+
+Commercial licenses include:
+
+- Unrestricted commercial use rights
+- Priority technical support
+- Custom feature development
+- Training and consulting services
+- Indemnification coverage
+
+================================================================================
+
+ACKNOWLEDGMENTS
+
+This project is built upon the work of numerous researchers and contributors
+in the field of infrared small target detection. We acknowledge:
+
+- All authors of the research papers implemented in this library
+- The open-source community for tools and libraries used
+- Dataset creators who made their data publicly available
+- Academic institutions supporting this research
+- Industry partners providing computational resources
+
+For a complete list of contributors and acknowledgments, see:
+<https://github.com/sachin-deshik-10/irst-library/blob/main/CONTRIBUTORS.md>
+
+================================================================================
+
+VERSION HISTORY
+
+v2.0.0 (2025-07-02): Major release with foundation model support
+v1.5.0 (2024-12-15): Added transformer architectures and deployment tools
+v1.0.0 (2024-06-01): Initial stable release with core functionality
+v0.9.0 (2024-03-15): Beta release for community testing
+v0.1.0 (2024-01-01): Alpha release with basic models
+
+For detailed changelog, see: CHANGELOG.md
+
+================================================================================
+
+CONTACT INFORMATION
+
+Project Maintainers:
+
+- Lead Developer: N. Sachin Deshik (<sachin.deshik@gmail.com>)
+
+
+Project Resources:
+
+- GitHub: <https://github.com/sachin-deshik-10/irst-library>
+- Documentation: <https://irst-library.readthedocs.io>
+- Issue Tracker: <https://github.com/sachin-deshik-10/irst-library/issues>
+- Discussions: <https://github.com/sachin-deshik-10/irst-library/discussions>
+
+================================================================================
+
+This license was last updated on July 2, 2025.

@@ -1,0 +1,21 @@
+# Core dependencies
+torch>=1.12.0
+torchvision>=0.13.0
+numpy>=1.21.0
+opencv-python>=4.5.0
+Pillow>=8.3.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+scikit-image>=0.18.0
+tqdm>=4.62.0
+pyyaml>=6.0
+tensorboard>=2.8.0
+wandb>=0.12.0
+omegaconf>=2.1.0
+typer>=0.6.0
+rich>=12.0.0
+albumentations>=1.2.0
+timm>=0.6.0
+einops>=0.4.0
